@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQA GCSE Chemistry Foundation Paper 2 - Practice Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            padding: 25px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .marks {
+            background: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            float: right;
+            margin-top: -5px;
+        }
+        
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            margin: 5px 0;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .multiple-choice {
+            margin: 10px 0;
+        }
+        
+        .multiple-choice label {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background: #ecf0f1;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .multiple-choice label:hover {
+            background: #d5dbdb;
+        }
+        
+        .multiple-choice input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+        }
+        
+        .results {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .grade {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .grade-9 { background: #8e44ad; color: white; }
+        .grade-8 { background: #3498db; color: white; }
+        .grade-7 { background: #27ae60; color: white; }
+        .grade-6 { background: #f39c12; color: white; }
+        .grade-5 { background: #e67e22; color: white; }
+        .grade-4 { background: #e74c3c; color: white; }
+        .grade-3 { background: #95a5a6; color: white; }
+        .grade-2 { background: #7f8c8d; color: white; }
+        .grade-1 { background: #34495e; color: white; }
+        
+        .feedback {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .correct {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .incorrect {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .improvement-section {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .flashcard {
+            background: white;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .flashcard:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .weak-areas {
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            transition: width 0.3s ease;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 0;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            .timer {
+                position: static;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">Time: 1:15:00</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>AQA GCSE Chemistry Foundation Paper 2</h1>
+            <p>Time allowed: 1 hour 15 minutes (75 minutes)</p>
+            <p>Total marks: 70</p>
+            <p><strong>Instructions:</strong> Answer ALL questions. Write your answers in the spaces provided.</p>
+        </div>
+        
+        <div class="content">
+            <div id="test-section">
+                <!-- Question 1 -->
+                <div class="question" data-topic="rates">
+                    <h3>Question 1 <span class="marks">3 marks</span></h3>
+                    <p>The rate of a chemical reaction can be affected by several factors.</p>
+                    
+                    <p><strong>(a)</strong> Name two factors that affect the rate of chemical reactions. <em>(2 marks)</em></p>
+                    <input type="text" id="q1a1" placeholder="Factor 1">
+                    <input type="text" id="q1a2" placeholder="Factor 2">
+                    
+                    <p><strong>(b)</strong> Explain why increasing temperature increases the rate of reaction. <em>(1 mark)</em></p>
+                    <textarea id="q1b" rows="2" placeholder="Your explanation..."></textarea>
+                </div>
+                
+                <!-- Question 2 -->
+                <div class="question" data-topic="organic">
+                    <h3>Question 2 <span class="marks">4 marks</span></h3>
+                    <p>Crude oil is separated into useful fractions by fractional distillation.</p>
+                    
+                    <p><strong>(a)</strong> What is crude oil? <em>(1 mark)</em></p>
+                    <input type="text" id="q2a" placeholder="Definition of crude oil">
+                    
+                    <p><strong>(b)</strong> Name the process used to separate crude oil into fractions. <em>(1 mark)</em></p>
+                    <input type="text" id="q2b" placeholder="Process name">
+                    
+                    <p><strong>(c)</strong> Complete the word equation for the complete combustion of methane. <em>(2 marks)</em></p>
+                    <p>methane + _______ → _______ + _______</p>
+                    <input type="text" id="q2c1" placeholder="Reactant" style="width: 30%; display: inline-block;">
+                    <input type="text" id="q2c2" placeholder="Product 1" style="width: 30%; display: inline-block;">
+                    <input type="text" id="q2c3" placeholder="Product 2" style="width: 30%; display: inline-block;">
+                </div>
+                
+                <!-- Question 3 -->
+                <div class="question" data-topic="analysis">
+                    <h3>Question 3 <span class="marks">5 marks</span></h3>
+                    <p>A student is carrying out tests to identify different gases produced in chemical reactions.</p>
+                    
+                    <p><strong>(a)</strong> Complete the table to show the tests for these gases. <em>(3 marks)</em></p>
+                    <table border="1" style="width: 100%; margin: 10px 0; border-collapse: collapse;">
+                        <tr>
+                            <th style="padding: 8px;">Gas</th>
+                            <th style="padding: 8px;">Test</th>
+                            <th style="padding: 8px;">Positive result</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Oxygen</td>
+                            <td style="padding: 8px;"><input type="text" id="q3a1" placeholder="Test for oxygen" style="width: 100%; margin: 0;"></td>
+                            <td style="padding: 8px;">Glowing splint relights</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Carbon dioxide</td>
+                            <td style="padding: 8px;">Bubble through limewater</td>
+                            <td style="padding: 8px;"><input type="text" id="q3a2" placeholder="Result with limewater" style="width: 100%; margin: 0;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Hydrogen</td>
+                            <td style="padding: 8px;"><input type="text" id="q3a3" placeholder="Test for hydrogen" style="width: 100%; margin: 0;"></td>
+                            <td style="padding: 8px;">Squeaky pop sound</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>(b)</strong> When heating substances in a test tube, why should the test tube be held at an angle? <em>(1 mark)</em></p>
+                    <div class="multiple-choice">
+                        <label><input type="radio" name="q3b" value="A"> A) To heat the substance more quickly</label>
+                        <label><input type="radio" name="q3b" value="B"> B) To prevent the substance from spilling out</label>
+                        <label><input type="radio" name="q3b" value="C"> C) To stop hot liquid from shooting out towards people</label>
+                        <label><input type="radio" name="q3b" value="D"> D) To make it easier to see the reaction</label>
+                    </div>
+                    
+                    <p><strong>(c)</strong> Give one other safety rule that should be followed when heating substances in the laboratory. <em>(1 mark)</em></p>
+                    <input type="text" id="q3c" placeholder="Safety rule">
+                </div>
+                
+                <!-- Question 4 -->
+                <div class="question" data-topic="atmosphere">
+                    <h3>Question 4 <span class="marks">6 marks</span></h3>
+                    <p>The atmosphere has changed over billions of years.</p>
+                    
+                    <p><strong>(a)</strong> State the approximate percentage of oxygen in today's atmosphere. <em>(1 mark)</em></p>
+                    <input type="number" id="q4a" placeholder="%" min="0" max="100">
+                    
+                    <p><strong>(b)</strong> Name the gas that makes up most of today's atmosphere. <em>(1 mark)</em></p>
+                    <input type="text" id="q4b" placeholder="Gas name">
+                    
+                    <p><strong>(c)</strong> Explain how oxygen levels increased in the early atmosphere. <em>(2 marks)</em></p>
+                    <textarea id="q4c" rows="3" placeholder="Explanation..."></textarea>
+                    
+                    <p><strong>(d)</strong> Name two greenhouse gases. <em>(2 marks)</em></p>
+                    <input type="text" id="q4d1" placeholder="Greenhouse gas 1">
+                    <input type="text" id="q4d2" placeholder="Greenhouse gas 2">
+                </div>
+                
+                <!-- Question 5 -->
+                <div class="question" data-topic="resources">
+                    <h3>Question 5 <span class="marks">7 marks</span></h3>
+                    <p>Copper can be extracted from copper ore by reduction.</p>
+                    
+                    <p><strong>(a)</strong> What is meant by reduction? <em>(1 mark)</em></p>
+                    <input type="text" id="q5a" placeholder="Definition of reduction">
+                    
+                    <p><strong>(b)</strong> Copper can be purified by electrolysis. In this process:</p>
+                    <p>• The anode is made of impure copper</p>
+                    <p>• The cathode is made of pure copper</p>
+                    <p>• The electrolyte is copper sulfate solution</p>
+                    
+                    <p>(i) What happens at the anode? <em>(1 mark)</em></p>
+                    <input type="text" id="q5b1" placeholder="Process at anode">
+                    
+                    <p>(ii) What happens at the cathode? <em>(1 mark)</em></p>
+                    <input type="text" id="q5b2" placeholder="Process at cathode">
+                    
+                    <p><strong>(c)</strong> Give two reasons why it is important to recycle metals. <em>(2 marks)</em></p>
+                    <input type="text" id="q5c1" placeholder="Reason 1">
+                    <input type="text" id="q5c2" placeholder="Reason 2">
+                    
+                    <p><strong>(d)</strong> Suggest one disadvantage of recycling metals. <em>(1 mark)</em></p>
+                    <input type="text" id="q5d" placeholder="Disadvantage">
+                    
+                    <p><strong>(e)</strong> Name a metal that is more reactive than carbon. <em>(1 mark)</em></p>
+                    <input type="text" id="q5e" placeholder="Metal name">
+                </div>
+                
+                <!-- Question 6 -->
+                <div class="question" data-topic="rates">
+                    <h3>Question 6 <span class="marks">8 marks</span></h3>
+                    <p>A student investigates how particle size affects the reaction between calcium carbonate and hydrochloric acid.</p>
+                    <p>CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂</p>
+                    
+                    <p><strong>(a)</strong> What is the independent variable in this investigation? <em>(1 mark)</em></p>
+                    <input type="text" id="q6a" placeholder="Independent variable">
+                    
+                    <p><strong>(b)</strong> Name two variables that should be kept constant. <em>(2 marks)</em></p>
+                    <input type="text" id="q6b1" placeholder="Control variable 1">
+                    <input type="text" id="q6b2" placeholder="Control variable 2">
+                    
+                    <p><strong>(c)</strong> The student measures the volume of gas produced every 30 seconds. Explain why small pieces of calcium carbonate react faster than large pieces. <em>(3 marks)</em></p>
+                    <textarea id="q6c" rows="4" placeholder="Explanation..."></textarea>
+                    
+                    <p><strong>(d)</strong> Calculate the relative formula mass (Mr) of calcium carbonate (CaCO₃). <em>(2 marks)</em></p>
+                    <p>Relative atomic masses: Ca = 40, C = 12, O = 16</p>
+                    <textarea id="q6d" rows="2" placeholder="Show your working..."></textarea>
+                </div>
+                
+                <!-- Question 7 -->
+                <div class="question" data-topic="organic">
+                    <h3>Question 7 <span class="marks">6 marks</span></h3>
+                    <p>Ethanol can be produced by fermentation or by reacting ethene with steam.</p>
+                    
+                    <p><strong>(a)</strong> Complete the word equation for fermentation. <em>(2 marks)</em></p>
+                    <p>glucose → _______ + _______</p>
+                    <input type="text" id="q7a1" placeholder="Product 1" style="width: 45%; display: inline-block;">
+                    <input type="text" id="q7a2" placeholder="Product 2" style="width: 45%; display: inline-block;">
+                    
+                    <p><strong>(b)</strong> State two conditions needed for fermentation. <em>(2 marks)</em></p>
+                    <input type="text" id="q7b1" placeholder="Condition 1">
+                    <input type="text" id="q7b2" placeholder="Condition 2">
+                    
+                    <p><strong>(c)</strong> Give one advantage and one disadvantage of producing ethanol by fermentation compared to using ethene. <em>(2 marks)</em></p>
+                    <p>Advantage: <input type="text" id="q7c1" placeholder="Advantage"></p>
+                    <p>Disadvantage: <input type="text" id="q7c2" placeholder="Disadvantage"></p>
+                </div>
+                
+                <!-- Question 8 -->
+                <div class="question" data-topic="analysis">
+                    <h3>Question 8 <span class="marks">5 marks</span></h3>
+                    <p>Paper chromatography can be used to separate and identify substances.</p>
+                    
+                    <p><strong>(a)</strong> In paper chromatography, what is the mobile phase? <em>(1 mark)</em></p>
+                    <div class="multiple-choice">
+                        <label><input type="radio" name="q8a" value="A"> A) The paper</label>
+                        <label><input type="radio" name="q8a" value="B"> B) The solvent</label>
+                        <label><input type="radio" name="q8a" value="C"> C) The substance being tested</label>
+                        <label><input type="radio" name="q8a" value="D"> D) The pencil line</label>
+                    </div>
+                    
+                    <p><strong>(b)</strong> A student obtains the chromatogram shown below. The solvent front moved 8.0 cm and substance X moved 6.0 cm.</p>
+                    <p>Calculate the Rf value for substance X. <em>(2 marks)</em></p>
+                    <textarea id="q8b" rows="2" placeholder="Show your working..."></textarea>
+                    
+                    <p><strong>(c)</strong> Suggest why the starting line is drawn in pencil and not pen. <em>(2 marks)</em></p>
+                    <textarea id="q8c" rows="2" placeholder="Explanation..."></textarea>
+                </div>
+                
+                <!-- Question 9 -->
+                <div class="question" data-topic="atmosphere">
+                    <h3>Question 9 <span class="marks">7 marks</span></h3>
+                    <p>Carbon dioxide levels in the atmosphere are increasing.</p>
+                    
+                    <p><strong>(a)</strong> State two human activities that increase carbon dioxide levels in the atmosphere. <em>(2 marks)</em></p>
+                    <input type="text" id="q9a1" placeholder="Activity 1">
+                    <input type="text" id="q9a2" placeholder="Activity 2">
+                    
+                    <p><strong>(b)</strong> Explain how increased carbon dioxide levels lead to global warming. <em>(3 marks)</em></p>
+                    <textarea id="q9b" rows="4" placeholder="Explanation of greenhouse effect..."></textarea>
+                    
+                    <p><strong>(c)</strong> Suggest two ways to reduce carbon dioxide emissions. <em>(2 marks)</em></p>
+                    <input type="text" id="q9c1" placeholder="Method 1">
+                    <input type="text" id="q9c2" placeholder="Method 2">
+                </div>
+                
+                <!-- Question 10 -->
+                <div class="question" data-topic="resources">
+                    <h3>Question 10 <span class="marks">9 marks</span></h3>
+                    <p>Life cycle assessments (LCAs) are used to assess the environmental impact of products.</p>
+                    
+                    <p><strong>(a)</strong> What is a life cycle assessment? <em>(2 marks)</em></p>
+                    <textarea id="q10a" rows="2" placeholder="Definition of life cycle assessment..."></textarea>
+                    
+                    <p><strong>(b)</strong> A student is comparing plastic bags and paper bags. Give two stages of the life cycle that should be considered in the assessment. <em>(2 marks)</em></p>
+                    <input type="text" id="q10b1" placeholder="Life cycle stage 1">
+                    <input type="text" id="q10b2" placeholder="Life cycle stage 2">
+                    
+                    <p><strong>(c)</strong> The table shows some data about plastic and paper bags:</p>
+                    <table border="1" style="width: 100%; margin: 10px 0; border-collapse: collapse;">
+                        <tr>
+                            <th style="padding: 8px;">Bag type</th>
+                            <th style="padding: 8px;">Energy to make (kJ)</th>
+                            <th style="padding: 8px;">Times reused</th>
+                            <th style="padding: 8px;">Time to decompose</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Plastic</td>
+                            <td style="padding: 8px;">763</td>
+                            <td style="padding: 8px;">4</td>
+                            <td style="padding: 8px;">450 years</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Paper</td>
+                            <td style="padding: 8px;">2511</td>
+                            <td style="padding: 8px;">1</td>
+                            <td style="padding: 8px;">2-6 weeks</td>
+                        </tr>
+                    </table>
+                    
+                    <p>(i) Which type of bag requires more energy to manufacture? <em>(1 mark)</em></p>
+                    <input type="text" id="q10c1" placeholder="Type of bag">
+                    
+                    <p>(ii) Use the data to explain which bag might be better for the environment. Give two reasons. <em>(3 marks)</em></p>
+                    <textarea id="q10c2" rows="3" placeholder="Explanation with two reasons..."></textarea>
+                    
+                    <p><strong>(d)</strong> Suggest one way that the environmental impact of plastic bags could be reduced. <em>(1 mark)</em></p>
+                    <input type="text" id="q10d" placeholder="Method to reduce impact">
+                </div>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="btn" onclick="submitTest()">Submit Test</button>
+                    <button class="btn btn-secondary" onclick="saveProgress()">Save Progress</button>
+                    <button class="btn btn-secondary" onclick="loadProgress()">Load Progress</button>
+                </div>
+            </div>
+            
+            <div id="results-section" class="hidden">
+                <div class="results">
+                    <h2>Test Results</h2>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div id="score-display"></div>
+                    <div id="grade-display"></div>
+                    <div id="detailed-feedback"></div>
+                    <div id="improvement-advice"></div>
+                    <div id="weak-areas-section" class="weak-areas"></div>
+                </div>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="btn" onclick="retakeTest()">Retake Test</button>
+                    <button class="btn btn-secondary" onclick="showWeakAreas()">Focus on Weak Areas</button>
+                    <button class="btn btn-secondary" onclick="printResults()">Print Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 75 * 60; // 75 minutes in seconds
+        let timerInterval;
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up! Submitting your test now.");
+                    submitTest();
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+            // Change color when time is running low
+            const timer = document.getElementById('timer');
+            if (timeLeft <= 300) { // 5 minutes
+                timer.style.background = '#c0392b';
+            } else if (timeLeft <= 900) { // 15 minutes
+                timer.style.background = '#e67e22';
+            }
+        }
+        
+        // Start timer when page loads
+        window.onload = function() {
+            startTimer();
+        };
+        
+        // Marking scheme and model answers
+        const markingScheme = {
+            q1a1: { answer: ["temperature", "concentration", "surface area", "pressure", "catalyst"], marks: 1 },
+            q1a2: { answer: ["temperature", "concentration", "surface area", "pressure", "catalyst"], marks: 1 },
+            q1b: { answer: ["particles move faster", "more collisions", "more energy", "kinetic energy"], marks: 1 },
+            q2a: { answer: ["mixture of hydrocarbons", "fossil fuel", "remains of dead organisms"], marks: 1 },
+            q2b: { answer: ["fractional distillation"], marks: 1 },
+            q2c1: { answer: ["oxygen"], marks: 1 },
+            q2c2: { answer: ["carbon dioxide"], marks: 0.5 },
+            q2c3: { answer: ["water"], marks: 0.5 },
+            q3a1: { answer: ["glowing splint", "lighted splint", "burning splint"], marks: 1 },
+            q3a2: { answer: ["turns milky", "goes milky", "becomes milky", "turns cloudy"], marks: 1 },
+            q3a3: { answer: ["lighted splint", "burning splint", "lit splint"], marks: 1 },
+            q3b: { answer: ["C"], marks: 1 },
+            q3c: { answer: ["wear safety goggles", "tie back hair", "stand up", "point away from people"], marks: 1 },
+            q4a: { answer: ["21", "20"], marks: 1 },
+            q4b: { answer: ["nitrogen"], marks: 1 },
+            q4c: { answer: ["photosynthesis", "plants", "algae", "produced oxygen", "early plants"], marks: 2 },
+            q4d1: { answer: ["carbon dioxide", "methane", "water vapor", "water vapour"], marks: 1 },
+            q4d2: { answer: ["carbon dioxide", "methane", "water vapor", "water vapour"], marks: 1 },
+            q5a: { answer: ["loss of oxygen", "gain of electrons", "removal of oxygen"], marks: 1 },
+            q5b1: { answer: ["copper dissolves", "oxidation", "copper ions formed"], marks: 1 },
+            q5b2: { answer: ["copper deposited", "reduction", "copper ions reduced"], marks: 1 },
+            q5c1: { answer: ["saves resources", "less pollution", "saves energy", "conserves ores"], marks: 1 },
+            q5c2: { answer: ["saves resources", "less pollution", "saves energy", "conserves ores"], marks: 1 },
+            q5d: { answer: ["expensive", "difficult to separate", "transport costs"], marks: 1 },
+            q5e: { answer: ["sodium", "potassium", "magnesium", "aluminum", "aluminium"], marks: 1 },
+            q6a: { answer: ["particle size", "surface area"], marks: 1 },
+            q6b1: { answer: ["temperature", "concentration", "volume", "mass"], marks: 1 },
+            q6b2: { answer: ["temperature", "concentration", "volume", "mass"], marks: 1 },
+            q6c: { answer: ["larger surface area", "more collisions", "faster reaction", "more exposed particles"], marks: 3 },
+            q6d: { answer: ["40 + 12 + 48 = 100", "100"], marks: 2 },
+            q7a1: { answer: ["ethanol"], marks: 1 },
+            q7a2: { answer: ["carbon dioxide"], marks: 1 },
+            q7b1: { answer: ["warm temperature", "yeast", "no oxygen", "anaerobic"], marks: 1 },
+            q7b2: { answer: ["warm temperature", "yeast", "no oxygen", "anaerobic"], marks: 1 },
+            q7c1: { answer: ["renewable", "cheap", "carbon neutral", "sustainable"], marks: 1 },
+            q7c2: { answer: ["slow", "impure", "batch process", "needs purification"], marks: 1 },
+            q8a: { answer: ["B"], marks: 1 },
+            q8b: { answer: ["6.0/8.
